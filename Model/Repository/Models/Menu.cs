@@ -44,25 +44,25 @@ namespace Recept.Models
             this.MenuRecipes = new List<MenuRecipe>();
         }
 
-        public string GetMenuKey(HttpContextBase context)
-        {
-            if (context.Session[MenuKey] == null)
-            {
-                if (!string.IsNullOrWhiteSpace(context.User.Identity.Name))
-                {
-                    context.Session[MenuKey] =
-                        context.User.Identity.Name;
-                }
-                else
-                {
-                    // Generate a new random GUID using System.Guid class
-                    Guid tempCartId = Guid.NewGuid();
-                    // Send tempCartId back to client as a cookie
-                    context.Session[MenuKey] = tempCartId.ToString();
-                }
-            }
-            return context.Session[MenuKey].ToString();
-        }
+        // public string GetMenuKey(HttpContextBase context)
+        // {
+        //     if (context.Session[MenuKey] == null)
+        //     {
+        //         if (!string.IsNullOrWhiteSpace(context.User.Identity.Name))
+        //         {
+        //             context.Session[MenuKey] =
+        //                 context.User.Identity.Name;
+        //         }
+        //         else
+        //         {
+        //             // Generate a new random GUID using System.Guid class
+        //             Guid tempCartId = Guid.NewGuid();
+        //             // Send tempCartId back to client as a cookie
+        //             context.Session[MenuKey] = tempCartId.ToString();
+        //         }
+        //     }
+        //     return context.Session[MenuKey].ToString();
+        // }
 
         public static Menu GetMenu(HttpContextBase context)
         {
