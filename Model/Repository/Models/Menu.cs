@@ -182,5 +182,10 @@ namespace Recept.Models
             return await db.MenuRecipes.Where(r => r.MenuId == Id).Include("Recipe").ToListAsync();
 
         }
+
+        public void GitTest()
+        {
+            
+        }
     }
 }
