@@ -183,9 +183,16 @@ namespace Recept.Models
 
         }
 
+<<<<<<< HEAD
         public void GitTest()
         {
             
         }
+=======
+        protected void GitTest(int id)
+        (
+            
+        )
+>>>>>>> FixModel
     }
 }
