@@ -9,6 +9,16 @@ namespace Recept.Context
 {
     public class RecipeContext : DbContext
     {
+         public RecipeContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        public static RecipeContext Create()
+        {
+            return new RecipeContext();
+        }
+        
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
@@ -25,15 +35,7 @@ namespace Recept.Context
 
         public DbSet<Unit> Units { get; set; }
 
-        public RecipeContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public static RecipeContext Create()
-        {
-            return new RecipeContext();
-        }
+       
 
         public static DbSet<IngredientMapper> IngredientMappers;
 
