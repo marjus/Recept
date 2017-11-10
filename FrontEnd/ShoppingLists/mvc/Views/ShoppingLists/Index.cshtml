@@ -1,0 +1,260 @@
+﻿@model Rcpt.ViewModels.ShoppingListVM
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-sm-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Lägg till
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <input type="text" class="form-control" id="addprodinput" placeholder="Produkt" />
+                <span class="input-group-btn">
+                    <button class="btn btn-success addprodbtn" type="button">Lägg till</button>
+                </span>
+            </div>
+            <br />
+            <button type="button" class="btn btn-success addcommonprod">Mjölk</button>
+            <button type="button" class="btn btn-success addcommonprod">Bröd</button>
+            <button type="button" class="btn btn-success addcommonprod">Lax</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#spicesModal">Kryddor</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#otherModal">Annat</button>
+
+            <!-- Modal -->
+            <div id="spicesModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Välj krydda från listan, finns den inte måste du skriva in den</h4>
+                        </div>
+                        <div class="modal-body">
+                            <button type="submit" class="btn btn-success addcommonprod">Salt</button>
+                            <button type="submit" class="btn btn-success addcommonprod">Peppar</button>
+                            <button type="submit" class="btn btn-success addcommonprod">Rosmarin</button>
+                            <button type="submit" class="btn btn-success addcommonprod">Dill</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="otherModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Välj produkt från listan, finns det inte måste du skriva in det</h4>
+                        </div>
+                        <div class="modal-body">
+                            <button type="submit" class="btn btn-success addcommonprod">Fryspåsar</button>
+                            <button type="submit" class="btn btn-success addcommonprod">Tannpasta</button>
+                            <button type="submit" class="btn btn-success addcommonprod">Kaffe</button>
+                            <button type="submit" class="btn btn-success addcommonprod">The</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="col-sm-6" id="shoppinglists">
+            @if (Model.CustomList != null)
+            {
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+
+                            <h4 class="panel-title pull-left">
+                                Kom ihåg <small> @Html.DisplayFor(modelItem => Model.CustomList.Title)</small>
+                            </h4>
+                            @if (Model.CustomList.ShoppingListItems != null && Model.CustomList.ShoppingListItems.Count > 0)
+                        {
+                                <div class="pull-right">
+                                    <input type="button" class="btn btn-danger btn-sm closeList" value="Ta bort" data-shoplistid=@Html.DisplayFor(model => Model.CustomList.Id) />
+                                </div>
+                            }
+                        </div>
+                        @if (Model.CustomList.ShoppingListItems != null && Model.CustomList.ShoppingListItems.Count > 0)
+                        {
+                            <table class="table table-striped shopping-list" data-shoplistid=@Html.DisplayFor(model => Model.CustomList.Id)>
+                                <tbody>
+                                    @foreach (var shopListItem in Model.CustomList.ShoppingListItems)
+                                    {
+                                        <tr data-shoplistitemid="@(Html.DisplayFor(model => shopListItem.Id))" @if (shopListItem.Done) { <text> class="done" </text>   }>
+                                            <td class="ingAmount">@Html.DisplayFor(model => shopListItem.Amount)</td>
+                                            <td class="ingUnit">@Html.DisplayFor(model => shopListItem.Unit) <span class="product">@Html.DisplayFor(model => shopListItem.Product.Name)</span></td>
+                                            <td>
+                                                <small>
+
+                                                    @Html.DisplayFor(model => shopListItem.FromRecipe.Title)
+
+                                                </small>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+
+                </div>
+            }
+
+            @if (Model.MenuLists != null)
+            {
+                    foreach (var shopList in Model.MenuLists)
+                    {
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+
+                            <h4 class="panel-title pull-left">
+                                @if (shopList.Menu != null)
+                                {
+                                    @Html.DisplayFor(model => shopList.Menu.Name) <small> @Html.DisplayFor(modelItem => shopList.CreatedDate)</small>
+                                }
+                                else
+                                {
+                                    <text> Kom ihåg <small> @Html.DisplayFor(modelItem => shopList.CreatedDate)</small></text>
+}
+                            </h4>
+                            
+                                <div class="pull-right">
+                                    <input type="button" class="btn btn-xs btn-danger closeList" value="Ta bort" data-shoplistid=@Html.DisplayFor(modelItem => shopList.Id) />
+                                </div>
+                            
+                        </div>
+                        @if (shopList.ShoppingListItems != null && shopList.ShoppingListItems.Count > 0)
+                        {
+                            <table class="table table-striped shopping-list" data-shoplistid=@Html.DisplayFor(model => shopList.Id)>
+                                <tbody>
+                                    @foreach (var shopListItem in shopList.ShoppingListItems)
+                                    {
+                                        <tr data-shoplistitemid="@(Html.DisplayFor(model => shopListItem.Id))" @if (shopListItem.Done)
+                                        { <text> class="done" </text>  }>
+                                            <td class="ingAmount">@Html.DisplayFor(model => shopListItem.Amount)</td>
+                                            <td class="ingUnit">@Html.DisplayFor(model => shopListItem.Unit) <span class="product">@Html.DisplayFor(model => shopListItem.Product.Name)</span></td>
+                                            <td>
+                                                <small>
+
+                                                    @Html.DisplayFor(model => shopListItem.FromRecipe.Title)
+
+                                                </small>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+
+                </div>
+                    }
+            }
+    </div>
+
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var hub = $.connection.shoppingListHub;
+
+            hub.client.listClosed = function (id) {
+                var lst = $('[data-shoplistid="' + id + '"]');
+                lst.remove();
+            };
+
+            hub.client.productAdded = function (amount, unit, product, listId, itemId) {
+
+                var tbl = $('[data-shoplistid="' + listId + '"]');
+
+                var newRow = document.createElement("tr");
+                newRow.setAttribute("data-shoplistitemid", itemId);
+                newRow.classList.add("newRow");
+                newRow.innerHTML = "<td class=\"ingAmount\">" + amount + "</td><td class=\"ingUnit\">" + unit + " <span class=\"product\">" + product + "</span></td><td></td>";
+
+                tbl.prepend(newRow);
+
+                $("#addprodinput").val("");
+            };
+
+            hub.client.ItemStatusChanged = function (shoppingListId, itemId, status) {
+                var itemRow = $('[data-shoplistitemid="' + itemId + '"]');
+
+                itemRow.removeClass("updating");
+
+                if (status && !itemRow.hasClass("done")) {
+                    itemRow.addClass("done");
+                }
+                else if (!status && itemRow.hasClass("done")) {
+                    itemRow.removeClass("done");
+                }
+            };
+
+            $.connection.hub.start().done(function () {
+                $('.addcommonprod').on("click", function () {
+
+                    // Call the Send method on the hub.
+                    hub.server.addProduct($(this).text());
+
+                });
+
+                $('.closeList').on("click", function () {
+
+                    var listId = $(this).attr("data-shoplistid");
+                    hub.server.setShoppingListClosed(listId);
+
+                });
+
+                $('.addprodbtn').on("click", function () {
+
+                    var itemId = $(this).attr("data-shoplistitemid");
+
+                    hub.server.addProduct($("#addprodinput").val());
+
+                });
+
+                $("#shoppinglists table").on('click', 'tr', function (event) {
+
+                    $(this).addClass("updating");
+
+                    var itemId = $(this).attr("data-shoplistitemid");
+                    var status = $(this).hasClass("done");
+                    hub.server.setProductBought(itemId, !status);
+                });
+            });
+        });
+
+        function AddFailed() {
+            alert("fail");
+        }
+
+        function AddSuccess() {
+
+        }
+
+    </script>
+
+}

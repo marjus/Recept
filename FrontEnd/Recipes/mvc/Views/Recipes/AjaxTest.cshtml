@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "AjaxTest";
+}
+
+<h2>AjaxTest</h2>
+
+@Html.Action("MenuSummary", "Menus")
+
+<div>
+    @using (Ajax.BeginForm("AddToMenu", "Menus", null, new AjaxOptions { UpdateTargetId = "MenuSummary" }, new { id = "AddToMenuForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="recipeId" id="recipeId" type="hidden" value="2" />
+        <button type="submit"> ok</button>
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(".AddToMenuBtn").on("click", function () {
+
+            $("#recipeId").val(this.getAttribute("data-id"));
+            $("#AddToMenuForm").submit();
+        });
+    </script>
+}

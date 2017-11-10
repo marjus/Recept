@@ -1,0 +1,21 @@
+﻿@model Rcpt.Models.Menu
+
+
+
+        <div id="MenuSummary">
+
+                @if (Model.MenuRecipes != null)
+                {
+                    foreach (var rec in Model.MenuRecipes)
+                    {
+                        <span class="MenuRecipe">@rec.Recipe.Title</span>
+
+                    }
+                    using (Ajax.BeginForm("EmptyMenu", "Menus", new AjaxOptions { UpdateTargetId = "MenuSummary" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Töm meny" />
+                    }
+                }
+
+            </div>

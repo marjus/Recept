@@ -1,0 +1,103 @@
+﻿@model Rcpt.Models.Recipe
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div>
+    <br />
+    <div class="row">
+        <div class="col-sm-10">
+            <h2>@Html.DisplayFor(model => model.Title)</h2>
+            <blockquote><p>@Html.DisplayFor(model => model.Description)</p></blockquote>
+        </div>
+        <div class="col-sm-2">
+            <span class="glyphicon glyphicon-cutlery AddedToMenuIcon" aria-hidden="true"></span><button class="btn-link AddToMenuBtn" data-id="@(Model.ID)">Lägg till meny</button>
+            <button class="btn btn-info">
+                <span class="glyphicon glyphicon-camera"></span> Lägg till bild
+            </button>
+        </div>
+        </div>
+    <br />
+    <br />
+    
+    @for (int i = 0; i < Model.SubRecipes.Count(); i++)
+    {
+        if (i > 0)
+        {
+            @Html.DisplayFor(model => Model.SubRecipes[i].Category.Category)
+            @Html.DisplayFor(model => Model.SubRecipes[i].Title)
+        }
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <h4>Ingredienser</h4>
+                <table >
+                    @foreach (var ing in Model.SubRecipes[i].Ingredients)
+                    {
+                        <tr>
+                            <td class="ingAmount">@Html.DisplayFor(model => ing.Amount)</td>
+                            <td class="ingUnit">@Html.DisplayFor(model => ing.Unit)</td>
+                            <td>@Html.DisplayFor(model => ing.Ingredient.Name)</td>
+                        </tr>
+                          
+                    }
+                    
+                </table>
+            </div>
+            
+            
+            <div class="col-sm-12 col-md-8">
+                <h4>Så här gör du</h4>    
+                <span class="data">@Html.DisplayFor(model => Model.SubRecipes[i].Process)</span>
+            </div>
+        </div>
+    }
+
+    <br />
+    <br />
+    <p>
+        <span class="glyphicon glyphicon-edit"></span> @Html.ActionLink("Ändra", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Tillbaka", "Index")
+    </p>
+</div>
+<br /><br />
+
+@using (Html.BeginForm("UploadImage", "Recipes", FormMethod.Post, new { @class = "well form-horizontal", enctype= "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    <label for="file">Filename:</label>
+    <input type="file" name="file" />
+    <br />
+    <input type="submit" value="Submit" />
+}
+
+<div hidden="hidden">
+    @using (Ajax.BeginForm("AddToMenu", "Menus", null, new AjaxOptions { OnFailure = "AddToMenuFailed", OnSuccess = "RecipeAdded", UpdateTargetId = "rcpCount" }, new { id = "AddToMenuForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="recipeId" id="recipeId" type="hidden" />
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(".AddToMenuBtn").on("click", function (e) {
+            $(this).parent().find(".AddedToMenuIcon").addClass("blue");
+            $("#recipeId").val(this.getAttribute("data-id"));
+            $("#AddToMenuForm").submit();
+        });
+
+        function AddToMenuFailed()
+        { alert("faield"); }
+
+        function RecipeAdded()
+        {
+
+        }
+    </script>
+}

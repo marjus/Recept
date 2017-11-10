@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Rcpt.Models.Recipe>
+
+@{
+    ViewBag.Title = "Recept";
+}
+<br />
+<div class="row">
+    <div class="well well-sm col-sm-12">        
+        @using (Html.BeginForm())
+        {
+            <p>
+                @Html.TextBox("filter")
+                <input type="submit" value="Sök" class="btn btn-default" />              
+            </p>
+        }        
+    </div>
+</div>
+<div class="row">
+    <div class="well well-sm col-sm-12">
+        <span class="glyphicon glyphicon-plus"></span> @Html.ActionLink("Nytt recept", "Create")
+    </div>
+</div>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-12 col-sm-6 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@Html.ActionLink(item.Title, "Details", new { id = item.ID })</div>
+                <img src="" />
+                <div class="panel-body">@Html.DisplayFor(modelItem => item.SubRecipes.FirstOrDefault().Category.Category)</div>
+                <div class="panel-body">@Html.DisplayFor(modelItem => item.Description)</div>
+                <div class="panel-footer">
+                    
+                    <span class="glyphicon glyphicon-cutlery AddedToMenuIcon" aria-hidden="true"></span><button class="btn-link AddToMenuBtn" data-id="@(item.ID)">Lägg till meny</button>
+                    @if (User.Identity.IsAuthenticated && System.Environment.UserName.Equals(item.CreatedByUserName))
+                    {
+                        <div class="pull-right">
+                            <span class="glyphicon glyphicon-edit"></span> @Html.ActionLink("Ändra", "Edit", new { id = item.ID }) 
+                            <button class="btn-link glyphicon glyphicon-trash warning DeleteRecipeBtn" data-id="@(item.ID)"></button>
+                        </div>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<br /><br />
+<div hidden="hidden">
+    @using (Ajax.BeginForm("AddToMenu", "Menus", null, new AjaxOptions { OnFailure="AddToMenuFailed", OnSuccess="RecipeAdded", UpdateTargetId = "rcpCount" }, new { id = "AddToMenuForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="recipeId" id="recipeId" type="hidden" />
+    }
+</div>
+
+<div hidden="hidden">
+    @using (Ajax.BeginForm("Delete", "Recipes", null, new AjaxOptions { OnFailure = "DeleteRecipeFailed", OnSuccess = "RecipeDeleted", UpdateTargetId = "rcpCount" }, new { id = "DeleteRecipeForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="id" id="deleteRecipeId" type="hidden" />
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(".DeleteRecipeBtn").on("click", function (e) {
+            if (confirm("Vill du radera receptet?")) {
+                $("#deleteRecipeId").val(this.getAttribute("data-id"));
+                $("#DeleteRecipeForm").submit();
+            }
+        });
+
+        function RecipeDeleted()
+        {
+            location.reload();
+        }
+
+        function DeleteRecipeFailed()
+        { alert("failed");}
+
+        $(".AddToMenuBtn").on("click", function (e) {
+            $(this).parent().find(".AddedToMenuIcon").addClass("blue");
+            $("#recipeId").val(this.getAttribute("data-id"));
+            $("#AddToMenuForm").submit();
+        });
+
+        function AddToMenuFailed()
+        { alert("faield"); }
+
+        function RecipeAdded()
+        {
+
+        }
+    </script>
+}

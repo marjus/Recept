@@ -1,0 +1,24 @@
+﻿
+
+       @if (ViewBag.MenuRecipeCount == null || ViewBag.MenuRecipeCount == 0)
+        {
+            <a href="#" class="navbar-brand"><span class="glyphicon glyphicon-cutlery"></span> <span class="badge" id="rcpCountBadge">0</span> recept i menyn</a>
+       }
+       else
+       {
+            <a href="~/Menus/Details" class="navbar-brand"><span class="glyphicon glyphicon-cutlery"></span> <span class="badge" id="rcpCountBadge">@ViewBag.MenuRecipeCount</span> recept i menyn</a>
+       }
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $("#openMenuBtn").on("click", function (e) {
+
+            window.location = "~/Menus/Details";
+
+        });
+
+    </script>
+}
