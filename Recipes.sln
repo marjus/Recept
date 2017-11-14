@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recipes.Service", "Services\Recipes\Recipes.Service.csproj", "{BE0EFE92-7813-43F5-9EF8-6A584A04A1A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5363B4E6-5454-410A-8888-0D801BA2905D} = {5363B4E6-5454-410A-8888-0D801BA2905D}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Model\Repository\Repository.csproj", "{5363B4E6-5454-410A-8888-0D801BA2905D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecipesFolder", "RecipesFolder", "{90B5E966-F506-4AD5-9B08-BFC41666AF3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE0EFE92-7813-43F5-9EF8-6A584A04A1A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0EFE92-7813-43F5-9EF8-6A584A04A1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0EFE92-7813-43F5-9EF8-6A584A04A1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0EFE92-7813-43F5-9EF8-6A584A04A1A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5363B4E6-5454-410A-8888-0D801BA2905D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5363B4E6-5454-410A-8888-0D801BA2905D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5363B4E6-5454-410A-8888-0D801BA2905D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5363B4E6-5454-410A-8888-0D801BA2905D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39F9D4AF-61DA-4F69-B158-B3000AB76521}
+	EndGlobalSection
+EndGlobal
