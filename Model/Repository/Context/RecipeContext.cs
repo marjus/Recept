@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Web;
-using Recept.Models;
+using Recipes.Models;
 
-namespace Recept.Context
+namespace Recipes.Context
 {
     public class RecipeContext : DbContext
     {

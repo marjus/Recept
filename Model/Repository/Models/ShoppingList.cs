@@ -6,7 +6,7 @@ using System.Web;
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Recept.Models
+namespace Recipes.Models
 {
     public class ShoppingList
     {

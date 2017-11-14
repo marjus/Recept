@@ -3,7 +3,7 @@
 //using Microsoft.AspNet.Identity;
 //using Microsoft.Owin.Security;
 
-//namespace Recept.Models
+//namespace Recipes.Models
 //{
 //    public class IndexViewModel
 //    {

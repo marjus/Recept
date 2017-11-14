@@ -1,7 +1,7 @@
 ﻿//using System.Collections.Generic;
 //using System.ComponentModel.DataAnnotations;
 
-//namespace Recept.Models
+//namespace Recipes.Models
 //{
 //    public class ExternalLoginConfirmationViewModel
 //    {

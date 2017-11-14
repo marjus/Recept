@@ -1,5 +1,5 @@
 ﻿
-using Recept.Context;
+using Recipes.Context;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace Recept.Models
+namespace Recipes.Models
 {
     public class Menu
     {
@@ -120,7 +120,7 @@ namespace Recept.Models
 
         //    var menuRecipe = db.MenuRecipes.SingleOrDefault(
         //        m => m.MenuId == Id
-        //        && m.RecipeID == recipe.ID
+        //        && m.RecipeID == Recipes.ID
         //        );
 
         //    if (menuRecipe == null)
@@ -129,7 +129,7 @@ namespace Recept.Models
         //        menuRecipe = db.MenuRecipes.Add(new MenuRecipe
         //        {
         //            MenuId = Id,
-        //            RecipeID = recipe.ID,
+        //            RecipeID = Recipes.ID,
         //            Servings = 4,
         //            DateCreated = DateTime.Now
         //        });
@@ -157,7 +157,7 @@ namespace Recept.Models
         //public async void SetServings(Recipe recipe, int servings)
         //{
             
-        //    var rcp = await db.MenuRecipes.SingleOrDefaultAsync(mr => mr.MenuId == Id && mr.RecipeID == recipe.ID);
+        //    var rcp = await db.MenuRecipes.SingleOrDefaultAsync(mr => mr.MenuId == Id && mr.RecipeID == Recipes.ID);
 
         //    if (rcp != null)
         //    {
