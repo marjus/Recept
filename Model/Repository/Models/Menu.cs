@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
+//using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace Recept.Models
 
         public virtual ICollection<MenuRecipe> MenuRecipes { get; set; }
 
-        private RecipeContext db = new RecipeContext();
+        private RecipeContext db = new RecipeContext(null);
 
         public const string MenuKey = "_menu_session_id_";
 
@@ -62,110 +62,110 @@ namespace Recept.Models
         //     return context.Session[MenuKey].ToString();
         // }
 
-        public static Menu GetMenu(HttpContextBase context)
-        {
-            var menu = new Menu();
+        //public static Menu GetMenu(HttpContextBase context)
+        //{
+        //    var menu = new Menu();
 
-            menu.MenuUserKey = menu.GetMenuKey(context);
+        //    menu.MenuUserKey = menu.GetMenuKey(context);
 
-            menu = menu.GetMenuWithValues();
+        //    menu = menu.GetMenuWithValues();
 
-            if (menu.CreatedDate < DateTime.Parse("2015-01-01"))
-                menu.CreatedDate = DateTime.Now;
+        //    if (menu.CreatedDate < DateTime.Parse("2015-01-01"))
+        //        menu.CreatedDate = DateTime.Now;
 
-            if (string.IsNullOrEmpty(menu.Name))
-            {
-                var dfi = DateTimeFormatInfo.CurrentInfo;
+        //    if (string.IsNullOrEmpty(menu.Name))
+        //    {
+        //        var dfi = DateTimeFormatInfo.CurrentInfo;
 
-                menu.Name = "Meny v." + dfi.Calendar.GetWeekOfYear(menu.CreatedDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            }
+        //        menu.Name = "Meny v." + dfi.Calendar.GetWeekOfYear(menu.CreatedDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        //    }
 
-            return menu;
-        }
+        //    return menu;
+        //}
 
-        // Helper method to simplify shopping cart calls
-        public static Menu GetMenu(Controller controller)
-        {
-            return GetMenu(controller.HttpContext);
-        }
+        //// Helper method to simplify shopping cart calls
+        //public static Menu GetMenu(Controller controller)
+        //{
+        //    return GetMenu(controller.HttpContext);
+        //}
 
-        public Menu GetMenuWithValues()
-        {
+        //public Menu GetMenuWithValues()
+        //{
 
-            var menu = db.Menus.Where(m => m.MenuUserKey == this.MenuUserKey && m.IsOpen).OrderByDescending(m => m.CreatedDate).FirstOrDefault();
+        //    var menu = db.Menus.Where(m => m.MenuUserKey == this.MenuUserKey && m.IsOpen).OrderByDescending(m => m.CreatedDate).FirstOrDefault();
 
-            if (menu == null)
-            {
-                return this;
-            }
-            else
-            {
-                return menu;
-            }
+        //    if (menu == null)
+        //    {
+        //        return this;
+        //    }
+        //    else
+        //    {
+        //        return menu;
+        //    }
 
-        }
+        //}
 
-        public void AddToMenu(Recipe recipe)
-        {
+        //public void AddToMenu(Recipe recipe)
+        //{
 
-            var menu = db.Menus.SingleOrDefault(m => m.MenuUserKey == this.MenuUserKey && m.IsOpen);
+        //    var menu = db.Menus.SingleOrDefault(m => m.MenuUserKey == this.MenuUserKey && m.IsOpen);
 
-            if (menu == null)
-            {
-                this.CreatedDate = DateTime.Now;
-                this.IsOpen = true;
-                db.Menus.Add(this);
-                db.SaveChanges();
-            }
+        //    if (menu == null)
+        //    {
+        //        this.CreatedDate = DateTime.Now;
+        //        this.IsOpen = true;
+        //        db.Menus.Add(this);
+        //        db.SaveChanges();
+        //    }
 
-            var menuRecipe = db.MenuRecipes.SingleOrDefault(
-                m => m.MenuId == Id
-                && m.RecipeID == recipe.ID
-                );
+        //    var menuRecipe = db.MenuRecipes.SingleOrDefault(
+        //        m => m.MenuId == Id
+        //        && m.RecipeID == recipe.ID
+        //        );
 
-            if (menuRecipe == null)
-            {
+        //    if (menuRecipe == null)
+        //    {
 
-                menuRecipe = db.MenuRecipes.Add(new MenuRecipe
-                {
-                    MenuId = Id,
-                    RecipeID = recipe.ID,
-                    Servings = 4,
-                    DateCreated = DateTime.Now
-                });
-            }
+        //        menuRecipe = db.MenuRecipes.Add(new MenuRecipe
+        //        {
+        //            MenuId = Id,
+        //            RecipeID = recipe.ID,
+        //            Servings = 4,
+        //            DateCreated = DateTime.Now
+        //        });
+        //    }
 
-            db.SaveChanges();
+        //    db.SaveChanges();
 
-        }
+        //}
 
-        public async void RemoveFromMenu(int id)
-        {
+        //public async void RemoveFromMenu(int id)
+        //{
 
-            var menuRecipe = await db.MenuRecipes.SingleOrDefaultAsync(
-            r => r.MenuId == Id
-            && r.RecipeID == id);
+        //    var menuRecipe = await db.MenuRecipes.SingleOrDefaultAsync(
+        //    r => r.MenuId == Id
+        //    && r.RecipeID == id);
 
-            if (menuRecipe != null)
-            {
-                db.MenuRecipes.Remove(menuRecipe);
-                db.SaveChanges();
-            }
+        //    if (menuRecipe != null)
+        //    {
+        //        db.MenuRecipes.Remove(menuRecipe);
+        //        db.SaveChanges();
+        //    }
 
-        }
+        //}
 
-        public async void SetServings(Recipe recipe, int servings)
-        {
+        //public async void SetServings(Recipe recipe, int servings)
+        //{
+            
+        //    var rcp = await db.MenuRecipes.SingleOrDefaultAsync(mr => mr.MenuId == Id && mr.RecipeID == recipe.ID);
 
-            var rcp = await db.MenuRecipes.SingleOrDefaultAsync(mr => mr.MenuId == Id && mr.RecipeID == recipe.ID);
+        //    if (rcp != null)
+        //    {
+        //        rcp.Servings = servings;
+        //        await db.SaveChangesAsync();
+        //    }
 
-            if (rcp != null)
-            {
-                rcp.Servings = servings;
-                await db.SaveChangesAsync();
-            }
-
-        }
+        //}
 
         public void EmptyMenu()
         {
@@ -176,12 +176,12 @@ namespace Recept.Models
 
         }
 
-        public async Task<List<MenuRecipe>> GetRecipes()
-        {
+        //public async Task<List<MenuRecipe>> GetRecipes()
+        //{
 
-            return await db.MenuRecipes.Where(r => r.MenuId == Id).Include("Recipe").ToListAsync();
+        //    return await db.MenuRecipes.Where(r => r.MenuId == Id).Include("Recipe").ToListAsync();
 
-        }
+        //}
 
     }
 }

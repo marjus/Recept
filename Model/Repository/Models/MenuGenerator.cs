@@ -42,22 +42,22 @@ namespace Recept.Models
                 takeCount = wantedRecipes.Value - 2;
             }
 
-            using(var db = new DAL.RecipeContext())
-            { 
-                var rcps = db.Recipes.OrderBy(r => Guid.NewGuid()).Take(takeCount);
+        //    using(var db = new DAL.RecipeContext())
+        //    { 
+        //        var rcps = db.Recipes.OrderBy(r => Guid.NewGuid()).Take(takeCount);
 
-                foreach (var rec in rcps)
-                {
-        //            m.Recipes.Add(rec);
-                }
+        //        foreach (var rec in rcps)
+        //        {
+        ////            m.Recipes.Add(rec);
+        //        }
 
-                db.SaveChangesAsync();
+        //        db.SaveChangesAsync();
 
-                //for (int i = 0; i < wantedRecipes-takeCount; i++ )
-                //{
-                //    // find well suited recipes that minimize ingredient waiste
-                //}
-            }
+        //        //for (int i = 0; i < wantedRecipes-takeCount; i++ )
+        //        //{
+        //        //    // find well suited recipes that minimize ingredient waiste
+        //        //}
+        //    }
             return m;
         }
     }

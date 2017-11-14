@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Rcpt.DAL;
-using System.Data.Entity;
+
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Recept.Models
@@ -29,22 +28,22 @@ namespace Recept.Models
             this.ShoppingListItems = new List<ShoppingListItem>();
         }
 
-        public async void AddMenu(int menuId)
-        {
-            if (menuId == 0)
-                throw new ArgumentException("Menu id missing");
+        //public async void AddMenu(int menuId)
+        //{
+        //    if (menuId == 0)
+        //        throw new ArgumentException("Menu id missing");
 
-            using (RecipeContext db = new RecipeContext())
-            {
-                var menu = await db.Menus.SingleOrDefaultAsync(m => m.Id == MenuId);
-                if (menu.MenuRecipes != null)
-                {
-                    foreach(var recipe in menu.MenuRecipes)
-                    {
+        //    using (RecipeContext db = new RecipeContext())
+        //    {
+        //        var menu = await db.Menus.SingleOrDefaultAsync(m => m.Id == MenuId);
+        //        if (menu.MenuRecipes != null)
+        //        {
+        //            foreach(var recipe in menu.MenuRecipes)
+        //            {
                         
-                    }
-                }
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
