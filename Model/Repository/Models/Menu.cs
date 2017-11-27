@@ -167,14 +167,14 @@ namespace Recipes.Models
 
         //}
 
-        public void EmptyMenu()
-        {
+        //public void EmptyMenu()
+        //{
 
-            var recipes = db.MenuRecipes.Where(r => r.MenuId == Id).ToArray();
-            db.MenuRecipes.RemoveRange(recipes);
-            db.SaveChanges();
+        //    var recipes = db.MenuRecipes.Where(r => r.MenuId == Id).ToArray();
+        //    db.MenuRecipes.RemoveRange(recipes);
+        //    db.SaveChanges();
 
-        }
+        //}
 
         //public async Task<List<MenuRecipe>> GetRecipes()
         //{

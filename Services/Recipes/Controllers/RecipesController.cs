@@ -4,18 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Models;
+using Recipes.Context;
 
 namespace Recipes.Controllers
 {
     [Route("api/[controller]")]
     public class RecipesController : Controller
     {
+        private readonly RecipeContext _db;
+
+        public RecipesController(RecipeContext db)
+        {
+            _db = db;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Recipe> Get()
         {
-            
-            return new string[] { "value1", "value2" };
+            return _db.Recipes.ToList();
         }
 
         // GET api/values/5
