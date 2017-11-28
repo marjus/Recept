@@ -1,41 +1,41 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Models;
-using Recipes.Context;
+using Repository;
 
 namespace Recipes.Controllers
 {
     [Route("api/[controller]")]
     public class RecipesController : Controller
     {
-        private readonly RecipeContext _db;
+        private readonly RecipeRepository _db;
 
-        public RecipesController(RecipeContext db)
+        public RecipesController(RecipeRepository db)
         {
             _db = db;
         }
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Recipe> Get()
+        public async Task<IEnumerable<Recipe>> Get()
         {
-            return _db.Recipes.ToList();
+            
+            return await _db.GetItemsFromCollectionAsync();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Recipe> Get(string id)
         {
-            return "value";
+            return await _db.GetItemFromCollectionAsync(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task Post([FromBody]Recipe recipe)
         {
+            await _db.AddDocumentIntoCollectionAsync(recipe);
         }
 
         // PUT api/values/5
@@ -46,8 +46,9 @@ namespace Recipes.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(string id)
         {
+            await _db.DeleteDocumentFromCollectionAsync(id);
         }
     }
 }
