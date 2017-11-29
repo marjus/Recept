@@ -25,6 +25,7 @@ namespace Recipes
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<Recipes.Context.RecipeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddMvc();
         }
 

@@ -11,9 +11,10 @@ namespace Recipes.Controllers
     {
         private readonly RecipeRepository _repo;
 
-        public RecipesController(RecipeRepository db)
+        public RecipesController()
         {
-            _repo = db;
+            _repo = new RecipeRepository();
+            //_repo = db;
         }
 
         // GET api/values

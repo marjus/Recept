@@ -17,8 +17,10 @@ namespace Repository
         protected static string CollectionId;
         protected static DocumentClient docClient;
 
-        public  RepositoryBase()
+        public  RepositoryBase(string dbId, string collectionId)
         {
+            DatabaseId = dbId;
+            CollectionId = collectionId;
             docClient = new DocumentClient(new Uri(Endpoint), Key);
             CreateDatabaseIfNotExistsAsync().Wait();
             CreateCollectionIfNotExistsAsync().Wait();
