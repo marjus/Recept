@@ -24,8 +24,7 @@ namespace Recipes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Recipes.Context.RecipeContext>
-            services.AddDbContext<Recipes.Context.RecipeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<Recipes.Context.RecipeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 
