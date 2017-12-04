@@ -3,25 +3,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Recipes.Models;
 using Repository;
+using System;
 
 namespace Recipes.Controllers
 {
     [Route("api/[controller]")]
     public class RecipesController : Controller
     {
-        private readonly RecipeRepository _repo;
+        private readonly IRecipeRepository _repo;
 
-        public RecipesController()
+        public RecipesController(IRecipeRepository repo)
         {
-            _repo = new RecipeRepository();
-            //_repo = db;
+            _repo = repo;
         }
 
         // GET api/values
         [HttpGet]
         public async Task<IEnumerable<Recipe>> Get()
         {
-            
+            var recipe = new Recipe();
+            recipe.ID = Guid.NewGuid().ToString();
+            recipe.Title = "My second recipe";
+            recipe.CreatedDate = DateTime.Now;
+            recipe.SubRecipes = new List<SubRecipe>();
+            recipe.SubRecipes.Add(new SubRecipe { Title = "Sallad", IngredientsText="200 g icebergsallad, 2 tomater" });
+            var addedRcp = _repo.AddDocumentIntoCollectionAsync(recipe);
+
             return await _repo.GetItemsFromCollectionAsync();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,14 @@ using System.Threading.Tasks;
 namespace Repository
 {
 
-    public abstract class RepositoryBase<TModel, TPk> : IDbCollectionOperationsRepository<TModel, TPk>
+    public abstract class RepositoryBase<TModel, TPk> : IDbCollectionOperationsRepository<TModel, TPk>, IRepositoryBase<TModel, TPk>
     {
         private static readonly string Endpoint = "https://rcpt-cosmos-db.documents.azure.com:443/";
         private static readonly string Key = "b1KD3ujrFRXJpyFxRJDnyo4mdNp3jzV8e8QTe0msge3uAw36We9WbazevGTUc9pwjR8HmvQ2DKBAhlN12refXA==";
         protected static string DatabaseId;
         protected static string CollectionId;
         protected static DocumentClient docClient;
+        private static int Throughput = 400;
 
         public  RepositoryBase(string dbId, string collectionId)
         {
@@ -74,7 +76,7 @@ namespace Repository
                     await docClient.CreateDocumentCollectionAsync(
                         UriFactory.CreateDatabaseUri(DatabaseId),
                         new DocumentCollection { Id = CollectionId },
-                        new RequestOptions { OfferThroughput = 1000 });
+                        new RequestOptions { OfferThroughput = Throughput });
                 }
                 else
                 {
@@ -124,7 +126,20 @@ namespace Repository
             }
         }
 
-        public abstract Task<IEnumerable<TModel>> GetItemsFromCollectionAsync();
+        public async Task<IEnumerable<TModel>> GetItemsFromCollectionAsync()
+        {
+            var documents = docClient.CreateDocumentQuery<TModel>(
+                  UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId),
+                  new FeedOptions { MaxItemCount = -1 })
+                  .AsDocumentQuery();
+
+            List<TModel> items = new List<TModel>();
+            while (documents.HasMoreResults)
+            {
+                items.AddRange(await documents.ExecuteNextAsync<TModel>());
+            }
+            return items;
+        }
 
         public async Task<TModel> UpdateDocumentFromCollection(TPk id, TModel item)
         {

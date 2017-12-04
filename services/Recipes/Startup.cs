@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 
 namespace Recipes
 {
@@ -25,7 +26,7 @@ namespace Recipes
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<Recipes.Context.RecipeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+            services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddMvc();
         }
 

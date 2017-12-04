@@ -11,7 +11,7 @@ namespace Recipes.Models
     public class Recipe
     {
         [JsonProperty(PropertyName = "id")]
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         [Display(Name = "Titel")]
      //   [JsonProperty(PropertyName = "title")]

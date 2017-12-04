@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using Recipes.Context;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,7 @@ namespace Recipes.Models
 {
     public class Menu
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         public string MenuUserKey { get; set; }
@@ -39,7 +39,7 @@ namespace Recipes.Models
 
         public Menu()
         {
-            this.MenuRecipes = new List<MenuRecipe>();
+            
         }
 
         // public string GetMenuKey(HttpContextBase context)
