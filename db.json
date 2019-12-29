@@ -1,10 +1,18 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "hello"
-    }
-  ],
+  "recipes": [
+  {
+        "id": 1,
+        "amount": 4,
+        "unit": "gr",
+        "name": "jäst"
+        },
+        {
+        "id": 2,
+        "amount": 250,
+        "unit": "ml",
+        "name": "vatten"
+        }
+],
   "profile": {
     "name": "typicode"
   }
