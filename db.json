@@ -1,4 +1,5 @@
-[
+{
+  "recipes": [
   {
         id: 1,
         amount: 4,
@@ -11,4 +12,8 @@
         unit: "ml",
         name: "vatten"
         }
-]
+],
+  "profile": {
+    "name": "typicode"
+  }
+}
