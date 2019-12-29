@@ -1,0 +1,14 @@
+[
+  {
+        id: 1,
+        amount: 4,
+        unit: "gr",
+        name: "jäst"
+        },
+        {
+        id: 2,
+        amount: 250,
+        unit: "ml",
+        name: "vatten"
+        }
+]
